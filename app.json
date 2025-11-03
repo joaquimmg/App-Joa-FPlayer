@@ -1,48 +1,96 @@
 {
   "expo": {
-    "name": "joalin-flowplayer",
+    "name": "Joalin FlowPlayer",
     "slug": "joalin-flowplayer",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
     "scheme": "joalinflowplayer",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff",
+      "dark": {
+        "backgroundColor": "#000000"
+      }
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.joalinflowplayer",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#E6F4FE"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.READ_MEDIA_VISUAL_USER_SELECTED",
+        "android.permission.ACCESS_MEDIA_LOCATION",
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.READ_MEDIA_VIDEO",
+        "android.permission.READ_MEDIA_AUDIO"
+      ],
+      "package": "com.anonymous.joalinflowplayer"
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/icon.png"
     },
     "plugins": [
-      "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
+          "image": "./assets/splash.png",
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
           "dark": {
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Permitir que $(PRODUCT_NAME) aceda às suas fotos e vídeos.",
+          "savePhotosPermission": "Permitir que $(PRODUCT_NAME) guarde fotos e vídeos.",
+          "isAccessMediaLocationEnabled": true,
+          "permissionType": [
+            "photo",
+            "video",
+            "audio"
+          ],
+          "android": {
+            "requestLegacyExternalStorage": true
+          }
+        }
+      ],
+      "expo-video"
     ],
     "experiments": {
-      "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c590b561-811e-44a1-8af0-098f56fec671"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/c590b561-811e-44a1-8af0-098f56fec671"
     }
   }
 }
