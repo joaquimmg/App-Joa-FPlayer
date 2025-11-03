@@ -14,6 +14,6 @@ export const FlowPalettes: Record<FlowKey, {
   orange: { primary: '#FB8C00', primaryAlt: '#FFB74D', bg: '#F5F5F5', text: '#111', isDark: false },
   blue:   { primary: '#1E88E5', primaryAlt: '#64B5F6', bg: '#F5F5F5', text: '#111', isDark: false },
   purple: { primary: '#8E24AA', primaryAlt: '#BA68C8', bg: '#F5F5F5', text: '#111', isDark: false },
-  black:  { primary: '#2D2D2D', primaryAlt: '#00E5FF', bg: '#0A0A0A', text: '#FFFFFF', isDark: true  },
+  black:  { primary: '#2D2D2D', primaryAlt: '#404040', bg: '#0A0A0A', text: '#FFFFFF', isDark: true  },
   pink:   { primary: '#D81B60', primaryAlt: '#F48FB1', bg: '#F5F5F5', text: '#111', isDark: false },
 };

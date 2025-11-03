@@ -10,25 +10,25 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as MediaLibrary from 'expo-media-library';
 import React, { useEffect, useState } from 'react';
 import {
-  Alert,
-  FlatList,
-  Modal,
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
+    Alert,
+    FlatList,
+    Modal,
+    Platform,
+    Pressable,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
 } from 'react-native';
 import { useThemeFlow } from '../../context/ThemeContext';
 import {
-  adicionarMedia,
-  initDB,
-  limparTudo,
-  limparVideosContentUri,
-  listarPorTipo as listar,
-  MediaLocal,
-  verificarVideosContentUri,
+    adicionarMedia,
+    initDB,
+    limparTudo,
+    limparVideosContentUri,
+    listarPorTipo as listar,
+    MediaLocal,
+    verificarVideosContentUri,
 } from '../../db/sqlite';
 import { BibliotecaStackParamList } from '../../navigation/BibliotecaStack';
 
@@ -79,7 +79,10 @@ function ListaGenerica({
       renderItem={({ item }) => (
         <Pressable
           onPress={() => onAbrirDetalhes(item.id!)}
-          style={styles.item}
+          style={[styles.item, { 
+            backgroundColor: palette.isDark ? '#1a1a1a' : '#fff',
+            borderBottomColor: palette.isDark ? '#333' : '#ddd',
+          }]}
         >
           <View>
             <Text style={[styles.titulo, { color: palette.text }]}>
@@ -330,7 +333,10 @@ export default function EcraTabsBiblioteca({ navigation }: Props) {
                 <Pressable
                   key={flow.key}
                   onPress={() => selecionarFlow(flow.key)}
-                  style={[styles.flowOpcao, { borderColor: palette.isDark ? '#333' : '#ddd' }]}
+                  style={[styles.flowOpcao, { 
+                    borderColor: palette.isDark ? '#444' : '#ddd',
+                    backgroundColor: palette.isDark ? '#1a1a1a' : '#f5f5f5',
+                  }]}
                 >
                   <View style={styles.flowOpcaoConteudo}>
                     <Text style={styles.flowEmoji}>{flow.emoji}</Text>
@@ -345,7 +351,10 @@ export default function EcraTabsBiblioteca({ navigation }: Props) {
             
             <Pressable
               onPress={() => setMostrarModalFlow(false)}
-              style={[styles.botaoCancelar, { borderColor: palette.isDark ? '#333' : '#ddd' }]}
+              style={[styles.botaoCancelar, { 
+                borderColor: palette.isDark ? '#444' : '#ddd',
+                backgroundColor: palette.isDark ? '#1a1a1a' : '#f5f5f5',
+              }]}
             >
               <Text style={{ color: palette.text, fontWeight: '600' }}>Cancelar</Text>
             </Pressable>
@@ -376,9 +385,11 @@ export default function EcraTabsBiblioteca({ navigation }: Props) {
         screenOptions={{
           tabBarIndicatorStyle: { backgroundColor: palette.primary },
           tabBarStyle: {
-            backgroundColor: palette.isDark ? '#1a1a1a' : '#fff',
+            backgroundColor: palette.isDark ? '#0d0d0d' : '#fff',
           },
           tabBarLabelStyle: { textTransform: 'none', fontWeight: '600' },
+          tabBarActiveTintColor: palette.primary,
+          tabBarInactiveTintColor: palette.isDark ? '#999' : '#666',
         }}
       >
         <TopTab.Screen name="Áudio">
@@ -417,7 +428,6 @@ const styles = StyleSheet.create({
   item: {
     padding: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
   },
   titulo: { fontWeight: '600', fontSize: 16 },
   
@@ -461,6 +471,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     marginBottom: 10,
+    backgroundColor: 'transparent',
   },
   flowOpcaoConteudo: {
     flexDirection: 'row',
