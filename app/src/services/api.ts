@@ -6,7 +6,7 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
 // IP local
-export const BASE_URL = 'https://app-joa-fplayer.onrender.com/';
+export const BASE_URL = 'https://app-joa-fplayer.onrender.com';
 
 // 172.16.21.69 - IP da faculdade
 // 192.168.100.9 - IP de casa 
