@@ -21,14 +21,14 @@ export default function BotaoFlow({ cor, label, onPress }: Props) {
         borderRadius: 16,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: cor === 'black' ? '#1F1F1F' : cor,
+        backgroundColor: cor === 'black' ? '#2D2D2D' : cor,
         margin: 6,
       }}
     >
       <View>
         <Text
           style={{
-            color: cor === 'black' ? '#fff' : '#fff',
+            color: '#fff',
             fontWeight: '600',
             textAlign: 'center',
           }}

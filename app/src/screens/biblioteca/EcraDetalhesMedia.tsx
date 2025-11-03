@@ -39,10 +39,31 @@ export default function EcraDetalhesMedia({ route, navigation }: Props) {
   return (
     <View style={{ flex: 1, backgroundColor: palette.bg, padding: 16 }}>
       <Text style={{ color: palette.text, marginBottom: 8 }}>Título</Text>
-      <TextInput value={titulo} onChangeText={setTitulo} style={{ backgroundColor: '#fff', padding: 12, borderRadius: 8, marginBottom: 12 }} />
+      <TextInput 
+        value={titulo} 
+        onChangeText={setTitulo} 
+        placeholderTextColor={palette.isDark ? '#999' : '#aaa'}
+        style={{ 
+          backgroundColor: palette.isDark ? '#1a1a1a' : '#fff', 
+          color: palette.text,
+          padding: 12, 
+          borderRadius: 8, 
+          marginBottom: 12 
+        }} 
+      />
 
       <Text style={{ color: palette.text, marginBottom: 8 }}>Flow (cor)</Text>
-      <TextInput value={flow} onChangeText={(t) => setFlow(t as any)} style={{ backgroundColor: '#fff', padding: 12, borderRadius: 8 }} />
+      <TextInput 
+        value={flow} 
+        onChangeText={(t) => setFlow(t as any)} 
+        placeholderTextColor={palette.isDark ? '#999' : '#aaa'}
+        style={{ 
+          backgroundColor: palette.isDark ? '#1a1a1a' : '#fff',
+          color: palette.text, 
+          padding: 12, 
+          borderRadius: 8 
+        }} 
+      />
 
       <Pressable onPress={guardar} style={{ marginTop: 16, backgroundColor: palette.primary, padding: 12, borderRadius: 8 }}>
         <Text style={{ color: '#fff', textAlign: 'center' }}>Guardar</Text>

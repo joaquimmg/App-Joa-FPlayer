@@ -77,7 +77,7 @@ export default function PainelFlows({ navigation }: Props) {
                 borderRadius: 16,
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: item.key === 'black' ? '#1F1F1F' : item.key,
+                backgroundColor: item.key === 'black' ? '#2D2D2D' : item.key,
                 opacity: 0.9,
                 elevation: 4,
                 shadowColor: '#000',

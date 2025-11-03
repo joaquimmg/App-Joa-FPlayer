@@ -17,7 +17,7 @@ export default function CartaoMedia({ item, onPress }: Props) {
     <Pressable
       onPress={onPress}
       style={{
-        backgroundColor: palette.isDark ? '#1e1e1e' : '#fff',
+        backgroundColor: palette.isDark ? '#1a1a1a' : '#fff',
         borderLeftWidth: 6,
         borderLeftColor: item.flow_cor,
         borderRadius: 8,

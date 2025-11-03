@@ -169,13 +169,27 @@ export default function EcraMixes() {
           placeholder="Nome do Mix" 
           value={nome} 
           onChangeText={setNome} 
-          style={{ backgroundColor: '#fff', padding: 12, borderRadius: 8, marginBottom: 8 }} 
+          placeholderTextColor={palette.isDark ? '#999' : '#aaa'}
+          style={{ 
+            backgroundColor: palette.isDark ? '#1a1a1a' : '#fff',
+            color: palette.text, 
+            padding: 12, 
+            borderRadius: 8, 
+            marginBottom: 8 
+          }} 
         />
         <TextInput 
           placeholder="Cor base (red, orange, blue, purple, black, pink)" 
           value={cor} 
           onChangeText={setCor} 
-          style={{ backgroundColor: '#fff', padding: 12, borderRadius: 8, marginBottom: 8 }} 
+          placeholderTextColor={palette.isDark ? '#999' : '#aaa'}
+          style={{ 
+            backgroundColor: palette.isDark ? '#1a1a1a' : '#fff',
+            color: palette.text, 
+            padding: 12, 
+            borderRadius: 8, 
+            marginBottom: 8 
+          }} 
         />
         <Pressable 
           onPress={onCriar} 
@@ -188,7 +202,7 @@ export default function EcraMixes() {
         data={mixes}
         keyExtractor={(m) => String(m.id)}
         renderItem={({ item }) => (
-          <View style={{ padding: 12, borderRadius: 12, backgroundColor: palette.isDark ? '#1f1f1f' : '#fff', marginBottom: 12 }}>
+          <View style={{ padding: 12, borderRadius: 12, backgroundColor: palette.isDark ? '#1a1a1a' : '#fff', marginBottom: 12 }}>
             <Text style={{ color: palette.text, fontWeight: '700' }}>{item.nome}</Text>
             <Text style={{ color: palette.text, opacity: 0.8 }}>Flow base: {item.flow_cor_base}</Text>
 
@@ -303,7 +317,7 @@ export default function EcraMixes() {
                     borderRadius: 8,
                     backgroundColor: audiosSelecionados.has(audio.id!) 
                       ? palette.primary 
-                      : (palette.isDark ? '#2a2a2a' : '#f0f0f0'),
+                      : (palette.isDark ? '#1a1a1a' : '#f0f0f0'),
                     marginBottom: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
@@ -339,7 +353,7 @@ export default function EcraMixes() {
                   flex: 1, 
                   padding: 12, 
                   borderRadius: 8, 
-                  backgroundColor: palette.isDark ? '#2a2a2a' : '#e0e0e0'
+                  backgroundColor: palette.isDark ? '#1a1a1a' : '#e0e0e0'
                 }}
               >
                 <Text style={{ color: palette.text, textAlign: 'center', fontWeight: '600' }}>
@@ -394,9 +408,9 @@ export default function EcraMixes() {
               value={nomeEdicao}
               onChangeText={setNomeEdicao}
               placeholder="Nome do Mix"
-              placeholderTextColor={palette.isDark ? '#888' : '#aaa'}
+              placeholderTextColor={palette.isDark ? '#999' : '#aaa'}
               style={{
-                backgroundColor: palette.isDark ? '#2a2a2a' : '#f0f0f0',
+                backgroundColor: palette.isDark ? '#1a1a1a' : '#f0f0f0',
                 color: palette.text,
                 padding: 12,
                 borderRadius: 8,
@@ -412,9 +426,9 @@ export default function EcraMixes() {
               value={corEdicao}
               onChangeText={setCorEdicao}
               placeholder="red, orange, blue, purple, black, pink"
-              placeholderTextColor={palette.isDark ? '#888' : '#aaa'}
+              placeholderTextColor={palette.isDark ? '#999' : '#aaa'}
               style={{
-                backgroundColor: palette.isDark ? '#2a2a2a' : '#f0f0f0',
+                backgroundColor: palette.isDark ? '#1a1a1a' : '#f0f0f0',
                 color: palette.text,
                 padding: 12,
                 borderRadius: 8,
@@ -430,7 +444,7 @@ export default function EcraMixes() {
                   flex: 1, 
                   padding: 12, 
                   borderRadius: 8, 
-                  backgroundColor: palette.isDark ? '#2a2a2a' : '#e0e0e0'
+                  backgroundColor: palette.isDark ? '#1a1a1a' : '#e0e0e0'
                 }}
               >
                 <Text style={{ color: palette.text, textAlign: 'center', fontWeight: '600' }}>

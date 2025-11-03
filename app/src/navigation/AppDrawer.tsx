@@ -90,7 +90,7 @@ export default function AppDrawer() {
       screenOptions={{
         headerShown: false,
         drawerActiveTintColor: palette.primary,
-        drawerInactiveTintColor: palette.isDark ? '#888' : '#555',
+        drawerInactiveTintColor: palette.isDark ? '#999' : '#555',
         drawerStyle: {
           backgroundColor: palette.bg,
         },

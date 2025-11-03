@@ -35,9 +35,9 @@ export default function Tabs() {
           </Pressable>
         ),
         tabBarActiveTintColor: palette.primary,
-        tabBarInactiveTintColor: palette.isDark ? '#888' : '#777',
+        tabBarInactiveTintColor: palette.isDark ? '#999' : '#777',
         tabBarStyle: { 
-          backgroundColor: palette.isDark ? '#1a1a1a' : '#FFF', 
+          backgroundColor: palette.isDark ? '#0d0d0d' : '#FFF', 
           borderTopWidth: 0.5,
           borderTopColor: palette.isDark ? '#333' : '#ddd'
         },
