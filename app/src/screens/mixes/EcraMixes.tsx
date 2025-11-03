@@ -15,7 +15,10 @@ export default function EcraMixes() {
   const [nome, setNome] = useState('');
   const [cor, setCor] = useState('red');
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalEditarVisible, setModalEditarVisible] = useState(false);
   const [mixSelecionado, setMixSelecionado] = useState<number | null>(null);
+  const [nomeEdicao, setNomeEdicao] = useState('');
+  const [corEdicao, setCorEdicao] = useState('');
   const [audiosDisponiveis, setAudiosDisponiveis] = useState<MediaLocal[]>([]);
   const [audiosSelecionados, setAudiosSelecionados] = useState<Set<number>>(new Set());
 
@@ -121,6 +124,30 @@ export default function EcraMixes() {
     }
   };
 
+  const abrirModalEditar = (mix: Mix) => {
+    setMixSelecionado(mix.id);
+    setNomeEdicao(mix.nome);
+    setCorEdicao(mix.flow_cor_base);
+    setModalEditarVisible(true);
+  };
+
+  const confirmarEdicao = async () => {
+    if (!mixSelecionado || !nomeEdicao.trim()) {
+      Alert.alert('Aviso', 'O nome do Mix não pode estar vazio.');
+      return;
+    }
+
+    try {
+      await atualizarMix(mixSelecionado, nomeEdicao, corEdicao);
+      setModalEditarVisible(false);
+      await carregar();
+      Alert.alert('Sucesso!', 'Mix atualizado com sucesso.');
+    } catch (error) {
+      console.error('[Mixes] Erro ao editar mix:', error);
+      Alert.alert('Erro', 'Falha ao atualizar o mix.');
+    }
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: palette.bg }}>
       {!autenticado ? (
@@ -170,34 +197,32 @@ export default function EcraMixes() {
                 <Text style={{ color: '#fff', textAlign: 'center' }}>Adicionar Áudios</Text>
               </Pressable>
               <Pressable
-                onPress={() => {
-                  Alert.prompt(
-                    'Editar Mix',
-                    'Novo nome do Mix:',
-                    async (novoNome) => {
-                      if (novoNome) {
-                        Alert.prompt(
-                          'Editar cor',
-                          'Nova cor (red, orange, blue, purple, black, pink):',
-                          async (novaCor) => {
-                            await atualizarMix(item.id, novoNome, novaCor || item.flow_cor_base);
-                            await carregar();
-                          },
-                          'plain-text',
-                          item.flow_cor_base
-                        );
-                      }
-                    },
-                    'plain-text',
-                    item.nome
-                  );
-                }}
-                style={{ backgroundColor: palette.primary, padding: 8, borderRadius: 8 }}
+                onPress={() => abrirModalEditar(item)}
+                style={{ backgroundColor: palette.primary, padding: 8, borderRadius: 8, minWidth: 60 }}
               >
-                <Text style={{ color: '#fff' }}>Editar</Text>
+                <Text style={{ color: '#fff', textAlign: 'center' }}>Editar</Text>
               </Pressable>
-              <Pressable onPress={async () => { await removerMix(item.id); await carregar(); }} style={{ backgroundColor: '#c0392b', padding: 8, borderRadius: 8 }}>
-                <Text style={{ color: '#fff' }}>Apagar</Text>
+              <Pressable 
+                onPress={async () => { 
+                  Alert.alert(
+                    'Confirmar',
+                    'Deseja realmente apagar este mix?',
+                    [
+                      { text: 'Cancelar', style: 'cancel' },
+                      { 
+                        text: 'Apagar', 
+                        style: 'destructive',
+                        onPress: async () => { 
+                          await removerMix(item.id); 
+                          await carregar(); 
+                        }
+                      }
+                    ]
+                  );
+                }} 
+                style={{ backgroundColor: '#c0392b', padding: 8, borderRadius: 8, minWidth: 60 }}
+              >
+                <Text style={{ color: '#fff', textAlign: 'center' }}>Apagar</Text>
               </Pressable>
             </View>
 
@@ -205,10 +230,35 @@ export default function EcraMixes() {
               <View style={{ marginTop: 8 }}>
                 <Text style={{ color: palette.text, marginBottom: 6 }}>Itens:</Text>
                 {item.items.map(it => (
-                  <View key={it.id} style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 4 }}>
-                    <Text style={{ color: palette.text }}>{it.media_titulo} ({it.media_tipo})</Text>
-                    <Pressable onPress={async () => { await removerItem(item.id, it.id); await carregar(); }}>
-                      <Text style={{ color: '#c0392b' }}>Remover</Text>
+                  <View key={it.id} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 4, gap: 8 }}>
+                    <Text style={{ color: palette.text, flex: 1 }}>{it.media_titulo} ({it.media_tipo})</Text>
+                    <Pressable 
+                      onPress={async () => { 
+                        Alert.alert(
+                          'Confirmar',
+                          `Remover "${it.media_titulo}" deste mix?`,
+                          [
+                            { text: 'Cancelar', style: 'cancel' },
+                            { 
+                              text: 'Remover', 
+                              style: 'destructive',
+                              onPress: async () => { 
+                                await removerItem(item.id, it.id); 
+                                await carregar(); 
+                              }
+                            }
+                          ]
+                        );
+                      }}
+                      style={{ 
+                        backgroundColor: '#c0392b', 
+                        paddingHorizontal: 12, 
+                        paddingVertical: 6, 
+                        borderRadius: 6,
+                        minWidth: 70
+                      }}
+                    >
+                      <Text style={{ color: '#fff', fontSize: 12, fontWeight: '600', textAlign: 'center' }}>Remover</Text>
                     </Pressable>
                   </View>
                 ))}
@@ -308,6 +358,97 @@ export default function EcraMixes() {
               >
                 <Text style={{ color: '#fff', textAlign: 'center', fontWeight: '600' }}>
                   Adicionar ({audiosSelecionados.size})
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Modal de Edição de Mix */}
+      <Modal
+        visible={modalEditarVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setModalEditarVisible(false)}
+      >
+        <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', padding: 20 }}>
+          <View style={{ 
+            backgroundColor: palette.bg, 
+            borderRadius: 16, 
+            padding: 20
+          }}>
+            <Text style={{ 
+              color: palette.text, 
+              fontSize: 20, 
+              fontWeight: '700', 
+              marginBottom: 16 
+            }}>
+              Editar Mix
+            </Text>
+            
+            <Text style={{ color: palette.text, marginBottom: 8, fontWeight: '600' }}>
+              Nome do Mix
+            </Text>
+            <TextInput
+              value={nomeEdicao}
+              onChangeText={setNomeEdicao}
+              placeholder="Nome do Mix"
+              placeholderTextColor={palette.isDark ? '#888' : '#aaa'}
+              style={{
+                backgroundColor: palette.isDark ? '#2a2a2a' : '#f0f0f0',
+                color: palette.text,
+                padding: 12,
+                borderRadius: 8,
+                marginBottom: 16,
+                fontSize: 16
+              }}
+            />
+
+            <Text style={{ color: palette.text, marginBottom: 8, fontWeight: '600' }}>
+              Cor Base
+            </Text>
+            <TextInput
+              value={corEdicao}
+              onChangeText={setCorEdicao}
+              placeholder="red, orange, blue, purple, black, pink"
+              placeholderTextColor={palette.isDark ? '#888' : '#aaa'}
+              style={{
+                backgroundColor: palette.isDark ? '#2a2a2a' : '#f0f0f0',
+                color: palette.text,
+                padding: 12,
+                borderRadius: 8,
+                marginBottom: 20,
+                fontSize: 16
+              }}
+            />
+
+            <View style={{ flexDirection: 'row', gap: 12 }}>
+              <Pressable
+                onPress={() => setModalEditarVisible(false)}
+                style={{ 
+                  flex: 1, 
+                  padding: 12, 
+                  borderRadius: 8, 
+                  backgroundColor: palette.isDark ? '#2a2a2a' : '#e0e0e0'
+                }}
+              >
+                <Text style={{ color: palette.text, textAlign: 'center', fontWeight: '600' }}>
+                  Cancelar
+                </Text>
+              </Pressable>
+              
+              <Pressable
+                onPress={confirmarEdicao}
+                style={{ 
+                  flex: 1, 
+                  padding: 12, 
+                  borderRadius: 8, 
+                  backgroundColor: palette.primary
+                }}
+              >
+                <Text style={{ color: '#fff', textAlign: 'center', fontWeight: '600' }}>
+                  Salvar
                 </Text>
               </Pressable>
             </View>
